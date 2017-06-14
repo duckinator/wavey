@@ -28,13 +28,14 @@ class Wavey
 
   # Generate a square wave.
   def square(frequency, amplitude, duration)
-    frequency_in_samples = (1.0 / frequency) * sample_rate
-    multiplier = 1
+    period_samples = sample_rate / frequency
 
     Array.new(duration * sample_rate) { |index|
-      multiplier = -multiplier if (index % (frequency_in_samples / 2)).zero?
-
-      amplitude * multiplier
+      if (index % period_samples) > (period_samples / 2)
+        amplitude
+      else
+        -amplitude
+      end
     }
   end
 
