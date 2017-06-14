@@ -14,7 +14,7 @@ RSpec.shared_examples "waveform generation" do |scale|
     JSON.parse(File.read(file))
   end
 
-  it "generates the correct waveforms" do
+  it "generates the correct waveforms (scale=#{scale})" do
     expect(get_samples("sawtooth", scale)).to eq(get_fixture("sawtooth", scale))
     expect(get_samples("silence", scale)).to eq(get_fixture("silence", scale))
     expect(get_samples("sine", scale)).to eq(get_fixture("sine", scale))
