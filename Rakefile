@@ -12,11 +12,11 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
 
-def save_fixtures(wavey_method)
-  file = File.join(__dir__, 'fixtures', "#{wavey_method}.json")
+def save_fixtures(wavey_method, scale)
+  file = File.join(__dir__, 'fixtures', "#{scale}-#{wavey_method}.json")
 
   File.open(file, 'w') do |f|
-    f.puts DevHelpers.get_samples(wavey_method).to_json
+    f.puts DevHelpers.get_samples(wavey_method, scale).to_json
   end
 end
 
@@ -25,7 +25,9 @@ task :generate_samples do
   warn "This doesn't actually check if they're valid."
   warn "After all, this is for generating data to run tests against."
 
-  %w[sawtooth sine square triangle silence].each do |wavey_method|
-    save_fixtures(wavey_method)
+  %i[small large].each do |scale|
+    %w[sawtooth sine square triangle silence].each do |wavey_method|
+      save_fixtures(wavey_method, scale)
+    end
   end
 end

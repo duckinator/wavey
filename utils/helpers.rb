@@ -1,9 +1,15 @@
 require "wavey"
 
 module DevHelpers
-  def get_samples(wavey_method)
+  def get_samples(wavey_method, scale = :large)
     channels = 1
-    sample_rate = 100
+    sample_rate =
+      case scale
+      when :small
+        100
+      when :large
+        44100
+      end
 
     frequency = 50 # Hz
     amplitude = 0.5 # 50% volume.
