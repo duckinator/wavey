@@ -12,8 +12,10 @@ class Wavey
 
   # Generate a sawtooth wave.
   def sawtooth(frequency, amplitude, duration)
+    period_samples = sample_rate / frequency
+
     Array.new(duration * sample_rate) { |index|
-      # ??? TODO
+      2 * ((index.to_f / period_samples) - (0.5 + (index.to_f / period_samples)).floor) * amplitude
     }
   end
 
