@@ -1,5 +1,5 @@
 require "wavey/version"
-require "waveform"
+require "wavefile"
 
 class Wavey
   attr_accessor :channels, :sample_rate
