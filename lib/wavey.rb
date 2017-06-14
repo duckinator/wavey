@@ -19,18 +19,10 @@ class Wavey
 
   # Generate a sine wave.
   def sine(frequency, amplitude, duration)
-    two_pi = Math.atan(1) * 8.0 
-
-    n_point = 100 # TODO: wtf is this even?
+    two_pi = Math.atan(1) * 8.0
 
     Array.new(duration * sample_rate) { |index|
-      x = index / n_point
-
-      if x < 0 || x > 1
-        0
-      else
-        amplitude * Math.sin(two_pi * frequency) * x
-      end
+      amplitude * Math.sin(two_pi * frequency * index) / sample_rate
     }
   end
 
