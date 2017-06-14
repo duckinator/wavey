@@ -50,7 +50,24 @@ class Wavey
 
 
   # Generate silence.
-  def silence(duration)
+  # TODO: maybe put duration first everywhere so we can =nil the other two vars?
+  def silence(_frequency, _amplitude, duration)
     Array.new(duration * sample_rate, 0)
+  end
+
+  # THIS API IS GARBAGE AND NEEDS REPLACING.
+  def save(filename, wave_method, frequency, amplitude, duration)
+    unless defined?(WaveFile)
+      raise "Wavey#save requires the wavefile gem."
+    end
+
+    samples = send(wave_method, frequency, amplitude, duration)
+
+    WaveFile::Writer.new(filename, WaveFile::Format.new(channels, :pcm_16, sample_rate)) do |writer|
+      buffer_format = WaveFile::Format.new(channels, :float, sample_rate)
+
+      buffer = WaveFile::Buffer.new(samples, buffer_format)
+      writer.write(buffer)
+    end
   end
 end
