@@ -32,7 +32,7 @@ class Wavey
     multiplier = 1
 
     Array.new(duration * sample_rate) { |index|
-      multiplier = -multiplier if (index % frequency_in_samples).zero?
+      multiplier = -multiplier if (index % (frequency_in_samples / 2)).zero?
 
       amplitude * multiplier
     }
