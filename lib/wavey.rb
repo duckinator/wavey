@@ -41,8 +41,10 @@ class Wavey
 
   # Generate a triangle wave.
   def triangle(frequency, amplitude, duration)
+    period_samples = sample_rate / frequency
+
     Array.new(duration * sample_rate) { |index|
-      # ??? TODO
+      amplitude.to_f - 2 * (1 - (index.to_f % period_samples) / (period_samples.to_f / 2)).abs
     }
   end
 
