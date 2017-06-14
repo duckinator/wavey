@@ -24,7 +24,7 @@ class Wavey
     two_pi = Math.atan(1) * 8.0
 
     Array.new(duration * sample_rate) { |index|
-      amplitude * Math.sin(two_pi * frequency * index) / sample_rate
+      amplitude.to_f * Math.sin(two_pi * frequency * (index.to_f / sample_rate))
     }
   end
 
