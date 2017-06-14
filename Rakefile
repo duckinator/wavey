@@ -1,8 +1,10 @@
 require "bundler/gem_tasks"
 require "rspec/core/rake_task"
 
-$: << File.join(__dir__, 'lib')
+$: << File.expand_path('./lib', __dir__)
 require 'wavey'
+
+require File.expand_path('./utils/helpers.rb', __dir__)
 
 require 'json'
 
@@ -10,20 +12,11 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
 
-
-def get_samples(wavey_method)
-  frequency = 50 # Hz
-  amplitude = 0.5 # 50% volume.
-  duration  = 10 # seconds.
-
-  Wavey.new.send(wavey_method, frequency, amplitude, duration)
-end
-
 def save_fixtures(wavey_method)
   file = File.join(__dir__, 'fixtures', "#{wavey_method}.json")
 
   File.open(file, 'w') do |f|
-    f.puts get_samples(wavey_method).to_json
+    f.puts DevHelper.get_samples(wavey_method).to_json
   end
 end
 
