@@ -16,7 +16,7 @@ def save_fixtures(wavey_method)
   file = File.join(__dir__, 'fixtures', "#{wavey_method}.json")
 
   File.open(file, 'w') do |f|
-    f.puts DevHelper.get_samples(wavey_method).to_json
+    f.puts DevHelpers.get_samples(wavey_method).to_json
   end
 end
 
