@@ -1,4 +1,5 @@
 require "wavey/version"
+require "waveform"
 
 class Wavey
   attr_accessor :channels, :sample_rate
@@ -59,10 +60,6 @@ class Wavey
 
   # THIS API IS GARBAGE AND NEEDS REPLACING.
   def save(filename, wave_method, frequency, amplitude, duration)
-    unless defined?(WaveFile)
-      raise "Wavey#save requires the wavefile gem."
-    end
-
     samples = send(wave_method, frequency, amplitude, duration)
 
     WaveFile::Writer.new(filename, WaveFile::Format.new(channels, :pcm_16, sample_rate)) do |writer|
