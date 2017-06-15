@@ -71,6 +71,23 @@ class Wavey
   def save(filename, wave_method, frequency, amplitude, duration)
     samples = send(wave_method, frequency, amplitude, duration)
 
+    save_samples(filename, samples)
+  end
+
+  def save2(filename, data)
+    results = data.map { |(wave_method, frequency, amplitude, duration, offset)|
+      offset_array = Array.new(0, offset * sample_rate)
+      offset_array + send(wave_method, frequency, amplitude, duration)
+    }
+
+    max_length = results.map(&:length).max
+
+    samples = Array.new(max_length, 0).zip(*results).map { |*args| args.reduce(&:|) }
+
+    save_samples(filename, samples)
+  end
+
+  def save_samples(filename, samples)
     WaveFile::Writer.new(filename, WaveFile::Format.new(channels, :pcm_16, sample_rate)) do |writer|
       buffer_format = WaveFile::Format.new(channels, :float, sample_rate)
 
