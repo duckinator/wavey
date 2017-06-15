@@ -16,7 +16,9 @@ class Wavey
     period_samples = sample_rate / frequency
 
     Array.new(duration * sample_rate) { |index|
-      2 * ((index.to_f / period_samples) - (0.5 + (index.to_f / period_samples)).floor) * amplitude
+      time = index.to_f / period_samples
+
+      2 * (time - (0.5 + time).floor) * amplitude
     }
   end
 
