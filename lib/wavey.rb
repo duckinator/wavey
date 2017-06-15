@@ -24,8 +24,15 @@ class Wavey
   def sine(frequency, amplitude, duration)
     two_pi = Math::PI * 2
 
+    # sin(two_pi * frequency * (index.to_f / sample_rate))
+    # ==
+    # sin((two_pi * frequency / sample_rate) * index)
+    #
+    # Pull out (two_pi * frequency / sample_rate) because it's constant.
+    sin_div_part = two_pi * frequency / sample_rate
+
     Array.new(duration * sample_rate) { |index|
-      amplitude.to_f * Math.sin(two_pi * frequency * (index.to_f / sample_rate))
+      amplitude * Math.sin(sin_div_part * index)
     }
   end
 
